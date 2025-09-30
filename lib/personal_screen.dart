@@ -427,7 +427,8 @@ class _PersonalScreenState extends State<PersonalScreen> {
                   ),
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
