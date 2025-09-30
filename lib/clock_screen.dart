@@ -149,25 +149,63 @@ class _ClockScreenState extends State<ClockScreen> {
         title: const Text("Đồng hồ"),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
+        backgroundColor: const Color(0xFF3F51B5),
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF3F51B5),
+              Color(0xFF7986CB),
+              Color(0xFFE8EAF6),
+            ],
+            stops: [0.0, 0.3, 1.0],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
             // Current Time Display
-            Card(
-              elevation: 4,
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: const LinearGradient(
+                  colors: [Colors.white, Color(0xFFF8F9FF)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(32),
                 child: Column(
                   children: <Widget>[
-                    const Icon(
-                      Icons.access_time,
-                      size: 64,
-                      color: Color(0xFF3F51B5),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF3F51B5).withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: const Icon(
+                        Icons.access_time,
+                        size: 48,
+                        color: Color(0xFF3F51B5),
+                      ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 24),
                     StreamBuilder<DateTime>(
                       stream: Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now()),
                       builder: (context, snapshot) {
@@ -175,14 +213,15 @@ class _ClockScreenState extends State<ClockScreen> {
                         return Text(
                           "${now.hour.toString().padLeft(2, "0")}:${now.minute.toString().padLeft(2, "0")}:${now.second.toString().padLeft(2, "0")}",
                           style: const TextStyle(
-                            fontSize: 48,
+                            fontSize: 56,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF3F51B5),
+                            letterSpacing: 2,
                           ),
                         );
                       },
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     StreamBuilder<DateTime>(
                       stream: Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now()),
                       builder: (context, snapshot) {
@@ -190,8 +229,9 @@ class _ClockScreenState extends State<ClockScreen> {
                         return Text(
                           "${now.day}/${now.month}/${now.year}",
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Colors.grey,
+                            fontWeight: FontWeight.w500,
                           ),
                         );
                       },
@@ -200,71 +240,154 @@ class _ClockScreenState extends State<ClockScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-
             // Voice Alarm Setting
-            Card(
-              elevation: 4,
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Row(
+                    Row(
                       children: <Widget>[
-                        Icon(Icons.mic, color: Color(0xFF3F51B5)),
-                        SizedBox(width: 8),
-                        Text(
-                          "Đặt báo thức bằng giọng nói",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3F51B5).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.mic, color: Color(0xFF3F51B5), size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Text(
+                            "Đặt báo thức bằng giọng nói",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2C3E50),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     if (!_speechEnabled)
-                      const Text(
-                        "Speech recognition không khả dụng. Vui lòng kiểm tra quyền truy cập microphone.",
-                        style: TextStyle(color: Colors.red),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.red.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(color: Colors.red.withOpacity(0.3)),
+                        ),
+                        child: const Row(
+                          children: <Widget>[
+                            Icon(Icons.error_outline, color: Colors.red, size: 20),
+                            SizedBox(width: 8),
+                            Expanded(
+                              child: Text(
+                                "Speech recognition không khả dụng. Vui lòng kiểm tra quyền truy cập microphone.",
+                                style: TextStyle(color: Colors.red, fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
                       )
                     else ...[
-                      const Text(
-                        "Nói thời gian báo thức (ví dụ: 7 giờ 30, 14:30, 8 giờ)",
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                      const SizedBox(height: 16),
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFF3F51B5).withOpacity(0.05),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Text(
+                          "Nói thời gian báo thức (ví dụ: 7 giờ 30, 14:30, 8 giờ)",
+                          style: TextStyle(fontSize: 15, color: Color(0xFF2C3E50), fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFF3F51B5).withOpacity(0.3)),
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xFFF8F9FF),
                         ),
                         child: Text(
                           _recognizedTime.isEmpty ? "Chưa có dữ liệu giọng nói" : _recognizedTime,
-                          style: const TextStyle(fontSize: 16),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: _recognizedTime.isEmpty ? Colors.grey : const Color(0xFF2C3E50),
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: FilledButton.icon(
-                              onPressed: _isListening ? _stopListening : _startListening,
-                              icon: Icon(_isListening ? Icons.stop : Icons.mic),
-                              label: Text(_isListening ? "Dừng" : "Bắt đầu nghe"),
-                              style: FilledButton.styleFrom(
-                                backgroundColor: _isListening ? Colors.red : const Color(0xFF3F51B5),
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                gradient: LinearGradient(
+                                  colors: _isListening 
+                                    ? [Colors.red, Colors.red.shade700]
+                                    : [const Color(0xFF3F51B5), const Color(0xFF5C6BC0)],
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: (_isListening ? Colors.red : const Color(0xFF3F51B5)).withOpacity(0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: ElevatedButton.icon(
+                                onPressed: _isListening ? _stopListening : _startListening,
+                                icon: Icon(_isListening ? Icons.stop : Icons.mic, color: Colors.white),
+                                label: Text(
+                                  _isListening ? "Dừng" : "Bắt đầu nghe",
+                                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.transparent,
+                                  shadowColor: Colors.transparent,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
                               ),
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          const SizedBox(width: 12),
                           Expanded(
-                            child: OutlinedButton.icon(
-                              onPressed: _recognizedTime.isNotEmpty ? _setAlarmFromVoice : null,
-                              icon: const Icon(Icons.alarm_add),
-                              label: const Text("Đặt báo thức"),
+                            child: Container(
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: const Color(0xFF3F51B5), width: 2),
+                              ),
+                              child: OutlinedButton.icon(
+                                onPressed: _recognizedTime.isNotEmpty ? _setAlarmFromVoice : null,
+                                icon: const Icon(Icons.alarm_add, color: Color(0xFF3F51B5)),
+                                label: const Text(
+                                  "Đặt báo thức",
+                                  style: TextStyle(color: Color(0xFF3F51B5), fontWeight: FontWeight.bold),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -274,38 +397,78 @@ class _ClockScreenState extends State<ClockScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-
             // Manual Alarm Setting
-            Card(
-              elevation: 4,
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Row(
+                    Row(
                       children: <Widget>[
-                        Icon(Icons.alarm, color: Color(0xFF3F51B5)),
-                        SizedBox(width: 8),
-                        Text(
-                          "Đặt báo thức thủ công",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3F51B5).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.alarm, color: Color(0xFF3F51B5), size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Text(
+                            "Đặt báo thức thủ công",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2C3E50),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
-                    const Text(
-                      "Sử dụng giao diện đồng hồ để đặt báo thức chính xác",
-                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    const SizedBox(height: 20),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF3F51B5).withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        "Sử dụng giao diện đồng hồ để đặt báo thức chính xác",
+                        style: TextStyle(fontSize: 15, color: Color(0xFF2C3E50), fontWeight: FontWeight.w500),
+                      ),
                     ),
-                    const SizedBox(height: 16),
-                    SizedBox(
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 50,
                       width: double.infinity,
-                      child: FilledButton.icon(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF3F51B5), Color(0xFF5C6BC0)],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF3F51B5).withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -314,15 +477,24 @@ class _ClockScreenState extends State<ClockScreen> {
                             ),
                           );
                         },
-                        icon: const Icon(Icons.settings),
-                        label: const Text("Mở cài đặt báo thức"),
+                        icon: const Icon(Icons.settings, color: Colors.white),
+                        label: const Text(
+                          "Mở cài đặt báo thức",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ],
+            ],
+          ),
         ),
       ),
     );

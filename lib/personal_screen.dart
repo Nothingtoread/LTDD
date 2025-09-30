@@ -93,48 +93,112 @@ class _PersonalScreenState extends State<PersonalScreen> {
         title: const Text("Cá nhân"),
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         centerTitle: true,
+        backgroundColor: const Color(0xFF3F51B5),
+        foregroundColor: Colors.white,
+        elevation: 0,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF3F51B5),
+              Color(0xFF7986CB),
+              Color(0xFFE8EAF6),
+            ],
+            stops: [0.0, 0.3, 1.0],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
             // Phone Call Section
-            Card(
-              elevation: 4,
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Row(
+                    Row(
                       children: <Widget>[
-                        Icon(Icons.phone, color: Color(0xFF3F51B5)),
-                        SizedBox(width: 8),
-                        Text(
-                          "Gọi điện thoại",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3F51B5).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.phone, color: Color(0xFF3F51B5), size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Text(
+                            "Gọi điện thoại",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2C3E50),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     TextField(
                       controller: _phoneController,
                       keyboardType: TextInputType.phone,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Nhập số điện thoại",
                         hintText: "Ví dụ: 0123456789",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF3F51B5), width: 2),
+                        ),
+                        prefixIcon: const Icon(Icons.phone, color: Color(0xFF3F51B5)),
+                        filled: true,
+                        fillColor: const Color(0xFFF8F9FF),
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    SizedBox(
+                    const SizedBox(height: 20),
+                    Container(
+                      height: 50,
                       width: double.infinity,
-                      child: FilledButton.icon(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF3F51B5), Color(0xFF5C6BC0)],
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFF3F51B5).withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           final String phoneNumber = _phoneController.text.trim();
                           if (phoneNumber.isNotEmpty) {
@@ -148,80 +212,157 @@ class _PersonalScreenState extends State<PersonalScreen> {
                             );
                           }
                         },
-                        icon: const Icon(Icons.call),
-                        label: const Text("Gọi ngay"),
+                        icon: const Icon(Icons.call, color: Colors.white),
+                        label: const Text(
+                          "Gọi ngay",
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent,
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            
             // YouTube Player Section
-            Card(
-              elevation: 4,
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    const Row(
+                    Row(
                       children: <Widget>[
-                        Icon(Icons.play_circle, color: Color(0xFF3F51B5)),
-                        SizedBox(width: 8),
-                        Text(
-                          "Xem YouTube",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF3F51B5).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(Icons.play_circle, color: Color(0xFF3F51B5), size: 24),
+                        ),
+                        const SizedBox(width: 16),
+                        const Expanded(
+                          child: Text(
+                            "Xem YouTube",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2C3E50),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     TextField(
                       controller: _youtubeController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: "Nhập URL YouTube",
                         hintText: "https://www.youtube.com/watch?v=...",
-                        border: OutlineInputBorder(),
-                        prefixIcon: Icon(Icons.link),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey.shade300),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF3F51B5), width: 2),
+                        ),
+                        prefixIcon: const Icon(Icons.link, color: Color(0xFF3F51B5)),
+                        filled: true,
+                        fillColor: const Color(0xFFF8F9FF),
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20),
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: OutlinedButton.icon(
-                            onPressed: () {
-                              final String url = _youtubeController.text.trim();
-                              if (url.isNotEmpty) {
-                                _initializeYoutubePlayer(url);
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Vui lòng nhập URL YouTube"),
-                                    backgroundColor: Colors.orange,
-                                  ),
-                                );
-                              }
-                            },
-                            icon: const Icon(Icons.play_arrow),
-                            label: const Text("Tải video"),
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF3F51B5), Color(0xFF5C6BC0)],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFF3F51B5).withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                final String url = _youtubeController.text.trim();
+                                if (url.isNotEmpty) {
+                                  _initializeYoutubePlayer(url);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Vui lòng nhập URL YouTube"),
+                                      backgroundColor: Colors.orange,
+                                    ),
+                                  );
+                                }
+                              },
+                              icon: const Icon(Icons.play_arrow, color: Colors.white),
+                              label: const Text(
+                                "Tải video",
+                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                shadowColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                              ),
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 8),
-                        OutlinedButton.icon(
-                          onPressed: () {
-                            _youtubeController.clear();
-                            _youtubePlayerController?.dispose();
-                            setState(() {
-                              _isYoutubePlayerReady = false;
-                            });
-                          },
-                          icon: const Icon(Icons.clear),
-                          label: const Text("Xóa"),
+                        const SizedBox(width: 12),
+                        Container(
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey.shade400, width: 2),
+                          ),
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              _youtubeController.clear();
+                              _youtubePlayerController?.dispose();
+                              setState(() {
+                                _isYoutubePlayerReady = false;
+                              });
+                            },
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            label: const Text(
+                              "Xóa",
+                              style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -229,32 +370,58 @@ class _PersonalScreenState extends State<PersonalScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            
             // YouTube Player Display
             if (_isYoutubePlayerReady && _youtubePlayerController != null)
-              Card(
-                elevation: 4,
+              Container(
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 15,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      const Text(
-                        "Video Player",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF3F51B5).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: const Icon(Icons.play_circle_filled, color: Color(0xFF3F51B5), size: 20),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            "Video Player",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2C3E50),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 16),
-                      YoutubePlayer(
-                        controller: _youtubePlayerController!,
-                        showVideoProgressIndicator: true,
-                        progressIndicatorColor: const Color(0xFF3F51B5),
-                        onReady: () {
-                          // Player is ready
-                        },
+                      const SizedBox(height: 20),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: YoutubePlayer(
+                          controller: _youtubePlayerController!,
+                          showVideoProgressIndicator: true,
+                          progressIndicatorColor: const Color(0xFF3F51B5),
+                          onReady: () {
+                            // Player is ready
+                          },
+                        ),
                       ),
                     ],
                   ),
